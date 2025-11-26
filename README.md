@@ -2,6 +2,34 @@
 
 A comprehensive step-by-step guide to building a full-stack CRUD (Create, Read, Update, Delete) application using Django framework. This tutorial covers all Django basics from scratch, perfect for beginners.
 
+## Quick Start (For Cloning This Repo)
+
+```powershell
+# 1. Clone the repository
+git clone https://github.com/NoelPOS/django-task-manager.git
+cd django-task-manager
+
+# 2. Create virtual environment
+python -m venv myenv
+
+# 3. Activate virtual environment
+.\myenv\Scripts\Activate.ps1
+
+# 4. Install dependencies
+pip install -r requirements.txt
+
+# 5. Run migrations
+python manage.py migrate
+
+# 6. Create superuser (optional)
+python manage.py createsuperuser
+
+# 7. Run server
+python manage.py runserver
+
+# 8. Open http://127.0.0.1:8000/ in your browser
+```
+
 ## Table of Contents
 1. [Prerequisites & Setup](#prerequisites--setup)
 2. [Understanding the Project Structure](#understanding-the-project-structure)
