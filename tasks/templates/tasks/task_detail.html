@@ -1,0 +1,59 @@
+{% extends 'tasks/base.html' %}
+
+{% block title %}{{ task.title }} - Task Manager{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-info text-white d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Task Details</h3>
+                {% if task.completed %}
+                    <span class="badge bg-success">Completed ✓</span>
+                {% else %}
+                    <span class="badge bg-warning text-dark">Pending ⏳</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">{{ task.title }}</h4>
+                
+                {% if task.description %}
+                    <div class="mb-3">
+                        <h6 class="text-muted">Description:</h6>
+                        <p class="card-text">{{ task.description }}</p>
+                    </div>
+                {% else %}
+                    <p class="text-muted fst-italic">No description provided.</p>
+                {% endif %}
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Created:</strong></p>
+                        <p class="text-muted">{{ task.created_at|date:"F d, Y g:i A" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1"><strong>Last Updated:</strong></p>
+                        <p class="text-muted">{{ task.updated_at|date:"F d, Y g:i A" }}</p>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="d-flex gap-2">
+                    <a href="{% url 'task_update' task.pk %}" class="btn btn-primary">
+                        Edit Task
+                    </a>
+                    <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger">
+                        Delete Task
+                    </a>
+                    <a href="{% url 'task_list' %}" class="btn btn-secondary">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
