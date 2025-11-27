@@ -4,16 +4,24 @@ A comprehensive step-by-step guide to building a full-stack CRUD (Create, Read, 
 
 ## Quick Start (For Cloning This Repo)
 
+> **⚠️ Windows PowerShell Users:** Before running step 3, you may need to allow script execution:
+> ```powershell
+> Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+> ```
+> See [Step 3](#step-3-activate-virtual-environment) for detailed instructions.
+
 ```powershell
 # 1. Clone the repository
 git clone https://github.com/NoelPOS/django-task-manager.git
 cd django-task-manager
 
-# 2. Create virtual environment (Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser)
+# 2. Create virtual environment
 python -m venv myenv
 
 # 3. Activate virtual environment
 .\myenv\Scripts\Activate.ps1
+# If you get an error, run in admin PowerShell: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+# Or use Command Prompt: myenv\Scripts\activate.bat
 
 # 4. Install dependencies
 pip install -r requirements.txt
@@ -135,17 +143,93 @@ python -m venv myenv
 ---
 
 ### Step 3: Activate Virtual Environment
+
+**⚠️ Important for Windows PowerShell Users:**
+
+Before activating the virtual environment, you may need to allow PowerShell script execution. If you see an error like:
+```
+.\myenv\Scripts\Activate.ps1 : File cannot be loaded because running scripts is disabled on this system.
+```
+
+**Fix it with these steps:**
+
+1. **Open PowerShell as Administrator:**
+   - Press `Windows Key`
+   - Type "PowerShell"
+   - Right-click "Windows PowerShell"
+   - Select "Run as administrator"
+
+2. **Check current execution policy:**
+   ```powershell
+   Get-ExecutionPolicy
+   ```
+   If it shows `Restricted`, you need to change it.
+
+3. **Set execution policy (choose ONE option):**
+
+   **Option A: Recommended (Current User Only)**
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+   - Type `Y` and press Enter to confirm
+   - This only affects your user account, not the entire system
+   - Allows local scripts to run
+
+   **Option B: For All Users (Requires Admin)**
+   ```powershell
+   Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+   ```
+   - Type `Y` and press Enter to confirm
+   - Affects all users on the computer
+   - May be blocked by company policies
+
+4. **Verify the change:**
+   ```powershell
+   Get-ExecutionPolicy
+   ```
+   Should now show `RemoteSigned`
+
+5. **Close the Admin PowerShell** and return to your regular terminal in VS Code
+
+---
+
+**Now Activate the Virtual Environment:**
+
 ```powershell
-# Windows PowerShell
+# Windows PowerShell (after setting execution policy)
 .\myenv\Scripts\Activate.ps1
 
-# Windows Command Prompt (cmd)
+# Windows Command Prompt (cmd) - no execution policy needed
 myenv\Scripts\activate.bat
+
+# Git Bash (alternative)
+source myenv/Scripts/activate
 ```
 
 **You should see** `(myenv)` prefix in your terminal, indicating the environment is active.
 
+**Example:**
+```
+Before: PS C:\Users\Saw\Desktop\Django-starter>
+After:  (myenv) PS C:\Users\Saw\Desktop\Django-starter>
+```
+
 **Why Activate?** All packages you install will only be available in this environment, not globally.
+
+**Troubleshooting:**
+
+| Issue | Solution |
+|-------|----------|
+| "cannot be loaded" error | Follow PowerShell execution policy steps above |
+| Still getting errors after policy change | Close and reopen terminal/VS Code |
+| "Activate.ps1 not found" | Make sure you're in the Django-starter directory |
+| `(myenv)` doesn't appear | Try the `cmd` version: `myenv\Scripts\activate.bat` |
+| Company/school computer blocks policy change | Use Command Prompt (`cmd`) instead of PowerShell |
+
+**Alternative if PowerShell doesn't work:**
+Use Command Prompt (cmd) which doesn't have execution policy restrictions:
+1. Open new terminal in VS Code: Click `+` dropdown → Select "Command Prompt"
+2. Run: `myenv\Scripts\activate.bat`
 
 ---
 
@@ -1765,11 +1849,28 @@ messages.error(request, 'Something went wrong!')
 ## Troubleshooting
 
 ### Virtual Environment Not Activating
-**Problem:** `Activate.ps1` script error  
-**Solution:** Run PowerShell as Administrator and execute:
+**Problem:** `Activate.ps1` script error or "running scripts is disabled on this system"
+
+**Solution:** Set PowerShell execution policy. You have two options:
+
+**Option 1: Current User Only (Recommended)**
 ```powershell
-Set-ExecutionPolicy RemoteSigned
+# Open PowerShell as Administrator
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
+
+**Option 2: All Users**
+```powershell
+# Open PowerShell as Administrator
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+```
+
+**Or use Command Prompt instead:**
+```cmd
+myenv\Scripts\activate.bat
+```
+
+📖 **See Step 3 for detailed instructions with screenshots and troubleshooting**
 
 ### Django Not Found
 **Problem:** `ModuleNotFoundError: No module named 'django'`  
